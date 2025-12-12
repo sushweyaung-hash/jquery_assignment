@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Web Form Assignment</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .error-text {
+      color: red;
+      font-size: 0.85rem;
+      margin-top: 3px;
+    }
+    .error-border {
+      border-color: red !important;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="mb-4">Interactive Web Form</h3>
+
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" id="username" class="form-control">
+          <div id="usernameError" class="error-text"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" id="email" class="form-control">
+          <div id="emailError" class="error-text"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" id="password" class="form-control">
+          <div id="passwordError" class="error-text"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control">
+          <div id="confirmPasswordError" class="error-text"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Interesting Topics</label>
+          <span id="topicError" class="error-text ms-3"></span>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" value="HTML">
+            <label class="form-check-label">HTML</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" value="CSS">
+            <label class="form-check-label">CSS</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" value="JavaScript">
+            <label class="form-check-label">JavaScript</label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Gender</label>
+          <span id="genderError" class="error-text ms-2"></span>
+          <select id="gender" class="form-select">
+            <option>--</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <button id="submitBtn" class="btn btn-primary">Submit</button>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $("#submitBtn").click(function() {
+        let isValid = true;
+
+        $(".error-text").text("");
+        $("input, select").removeClass("error-border");
+
+        if ($("#username").val().trim() === "") {
+          $("#usernameError").text("This field must not be empty");
+          $("#username").addClass("error-border");
+          isValid = false;
+        }
+
+        if ($("#email").val().trim() === "") {
+          $("#emailError").text("This field must not be empty");
+          $("#email").addClass("error-border");
+          isValid = false;
+        }
+
+        if ($("#password").val().trim() === "") {
+          $("#passwordError").text("This field must not be empty");
+          $("#password").addClass("error-border");
+          isValid = false;
+        }
+
+        let pw = $("#password").val();
+        let cpw = $("#confirmPassword").val();
+
+        if (cpw.trim() === "") {
+          $("#confirmPasswordError").text("This field must not be empty");
+          $("#confirmPassword").addClass("error-border");
+          isValid = false;
+        } else if (pw !== cpw) {
+          $("#confirmPasswordError").text("Confirmed password mismatched the password");
+          $("#confirmPassword").addClass("error-border");
+          isValid = false;
+        }
+
+        if ($(".topic:checked").length === 0) {
+          $("#topicError").text("At least one topic must be selected");
+          isValid = false;
+        }
+
+        if ($("#gender").val() === "--") {
+          $("#genderError").text("Please choose your gender");
+          $("#gender").addClass("error-border");
+          isValid = false;
+        }
+
+        if (isValid) {
+          alert("Form submitted successfully!");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
